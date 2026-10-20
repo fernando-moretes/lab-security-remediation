@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 — 2026-10-20
+
+- Offline synthetic ASFF S3.8 review through CLI and JavaScript API.
+- Preserve all four bucket public-access flags and expose the exact proposed diff.
+- Reject missing/string-valued flags, unsupported scope, malformed timestamps,
+  unknown fields and inconsistent fixture states.
+- Free-text descriptions never select actions or appear in the review output.
+- Authored synthetic fixture, PT/EN exercises and official AWS references.
+- No live AWS collection or cloud execution added.
+
 ## 0.2.0 — 2026-10-20
 
 - Installable npm package with allowlisted files and executable CLI.

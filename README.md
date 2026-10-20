@@ -1,4 +1,4 @@
-# Security remediation review lab — v0.2.0
+# Security remediation review lab — v0.3.0
 
 Fernando Azevedo · 20 October 2026 · MIT
 
@@ -12,6 +12,15 @@ Running a group session? Use the [40-minute facilitator guide](WORKSHOP.md).
 Para uma sessão em grupo, use o [roteiro de 40 minutos](WORKSHOP.md).
 
 ## CLI e demonstração visual / CLI and visual demonstration
+
+**New in 0.3.0:** [offline ASFF review](ASFF.md) with a synthetic S3.8 finding,
+four explicit S3 flags and negative-input tests.
+**Novo:** revisão offline de finding ASFF sintético, com quatro campos S3
+preservados e proposta não executável.
+
+```sh
+npx security-remediation-review-lab@0.3.0 asff
+```
 
 Use the npm quick start below, or clone the repository to inspect and modify
 the source before running it.
@@ -43,9 +52,9 @@ O servidor aceita apenas leitura dos arquivos fixos da demonstração.
 Via npm:
 
 ```sh
-npx security-remediation-review-lab@0.2.0 test
-npx security-remediation-review-lab@0.2.0 scenarios all --lang pt
-npx security-remediation-review-lab@0.2.0 web
+npx security-remediation-review-lab@0.3.0 test
+npx security-remediation-review-lab@0.3.0 scenarios all --lang pt
+npx security-remediation-review-lab@0.3.0 web
 ```
 
 The npm client may use the network to download the package. Once installed,
@@ -147,12 +156,13 @@ Perguntas para discutir:
 
 O ledger e o estado vivem no mesmo processo e desaparecem ao terminar.
 Não há concorrência distribuída, persistência, autorização IAM, aprovação
-assinada, TTL ou integração ASFF. O teste de campo extra não comprova resistência
+assinada, TTL ou coleta ASFF na AWS. O adaptador offline é um exercício separado.
+O teste de campo extra não comprova resistência
 geral a prompt injection. A representação booleana não cobre os quatro campos
 reais de S3 Block Public Access. O custo de AWS é zero nesta versão porque não
 há chamadas de rede; isso não estima o custo de uma implementação real.
 
-Próxima fase: adaptador somente leitura, finding ASFF sanitizado, aprovação
+Próxima fase: coleta somente leitura, aprovação
 autenticada, ledger durável com conditional writes, recuperação após falha,
 medição de custo e limpeza verificável, em ambiente isolado.
 
@@ -194,7 +204,8 @@ replays. Read `selfTest()` and explain why each failure must stop the workflow.
 
 This is not a Security Hub integration or production authorization system.
 The ledger is process-local and ephemeral. There is no distributed atomicity,
-IAM authorization, signed approval, expiry, ASFF adapter or crash recovery.
+IAM authorization, signed approval, expiry, live ASFF collection or crash recovery.
+The offline ASFF adapter is a separate teaching exercise.
 The boolean is not a complete S3 Block Public Access configuration. The
 unknown-field test does not prove general prompt-injection resistance.
 

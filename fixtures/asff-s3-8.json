@@ -1,0 +1,31 @@
+{
+  "SchemaVersion": "2018-10-08",
+  "Id": "synthetic/asff/s3-8",
+  "ProductArn": "arn:aws:securityhub:us-east-1::product/aws/securityhub",
+  "GeneratorId": "security-control/S3.8",
+  "AwsAccountId": "000000000000",
+  "Types": ["Software and Configuration Checks/Industry and Regulatory Standards"],
+  "CreatedAt": "2026-10-20T12:00:00.000Z",
+  "UpdatedAt": "2026-10-20T12:00:00.000Z",
+  "Severity": { "Label": "HIGH" },
+  "Title": "Synthetic S3.8 teaching fixture",
+  "Description": "Fictional example only. Not collected from AWS.",
+  "Compliance": { "Status": "FAILED", "SecurityControlId": "S3.8" },
+  "RecordState": "ACTIVE",
+  "Resources": [{
+    "Type": "AwsS3Bucket",
+    "Id": "arn:aws:s3:::synthetic-review-lab",
+    "Partition": "aws",
+    "Region": "us-east-1",
+    "Details": {
+      "AwsS3Bucket": {
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": false,
+          "IgnorePublicAcls": true,
+          "BlockPublicPolicy": false,
+          "RestrictPublicBuckets": true
+        }
+      }
+    }
+  }]
+}
