@@ -14,6 +14,8 @@ All resources/findings passed to this teaching API must be synthetic.
 | `selfTest()` | none | Seven test results; throws on failed assertion |
 | `scenarios` from `/scenarios` | array | Available IDs with PT/EN title and lesson |
 | `runScenario(id)` from `/scenarios` | known ID | Independent synthetic before/after, steps, expected outcome, optional rejection |
+| `reviewSyntheticAsff(input)` from `/asff` | bundled synthetic ASFF shape | Non-executable four-flag review candidate; see ASFF.md |
+| `publicAccessFields` from `/asff` | frozen array | Four supported S3 field names |
 
 `apply` throws on absent or mismatched approval, proposal schema/digest/scope
 errors, conflicting replay or stale resource version/state.

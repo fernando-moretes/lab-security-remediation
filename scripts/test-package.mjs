@@ -23,12 +23,15 @@ try {
   npm(["install", "--ignore-scripts", "--no-audit", "--no-fund", "--package-lock=false", join(temp, packed.filename)], temp);
   const installed = join(temp, "node_modules", "security-remediation-review-lab");
   const manifest = JSON.parse(readFileSync(join(installed, "package.json"), "utf8"));
-  assert.equal(manifest.version, "0.2.0");
+  assert.equal(manifest.version, JSON.parse(readFileSync(join(root, "package.json"), "utf8")).version);
   const r = spawnSync(process.execPath, [join(installed, "bin", "cli.mjs"), "test"], { encoding: "utf8" });
   assert.equal(r.status, 0, r.stderr);
   assert.equal(JSON.parse(r.stdout).passed, 7);
   const linkedCli = JSON.parse(npm(["exec", "--offline", "--", "security-remediation-lab", "scenarios", "drift", "--json"], temp));
   assert.equal(linkedCli[0].outcome, "rejected");
+  const asff = JSON.parse(npm(["exec", "--offline", "--", "security-remediation-lab", "asff"], temp));
+  assert.equal(asff.executable, false);
+  assert.equal(Object.keys(asff.candidate.before).length, 4);
   const { startServer } = await import(pathToFileURL(join(installed, "server.mjs")));
   const server = await startServer();
   try {
