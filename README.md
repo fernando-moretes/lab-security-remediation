@@ -8,6 +8,9 @@ Fernando Azevedo · 20 October 2026 · MIT
 [Report a result / Relatar teste](https://github.com/fernando-moretes/lab-security-remediation/issues/new/choose) ·
 [Security](SECURITY.md)**
 
+Running a group session? Use the [40-minute facilitator guide](WORKSHOP.md).
+Para uma sessão em grupo, use o [roteiro de 40 minutos](WORKSHOP.md).
+
 ```sh
 git clone https://github.com/fernando-moretes/lab-security-remediation.git
 cd lab-security-remediation
