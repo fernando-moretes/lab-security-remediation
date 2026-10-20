@@ -79,6 +79,12 @@ não declarar que o exercício está pronto para produção.
 
 ## Feedback and cleanup / Feedback e limpeza
 
+Optional follow-up session: use [DURABILITY.md](DURABILITY.md) to compare the
+memory-only exercise with SQLite persistence. Reproduce `after-target`, inspect
+the pending ledger and reconcile from the receipt. Then reproduce drift without
+a receipt and explain why recovery stops with `uncertain`. This extension
+requires Node.js 22.13+ and explicitly creates local database files.
+
 Use the lab feedback issue template voluntarily: version, OS, test results,
 blocking step and one suggestion. Do not collect names or emails for attendance
 unless separately agreed. Public attribution requires separate consent.

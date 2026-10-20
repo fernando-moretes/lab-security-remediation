@@ -1,4 +1,4 @@
-# Security remediation review lab — v0.3.0
+# Security remediation review lab — v0.4.0 (GitHub)
 
 Fernando Azevedo · 20 October 2026 · MIT
 
@@ -12,6 +12,12 @@ Running a group session? Use the [40-minute facilitator guide](WORKSHOP.md).
 Para uma sessão em grupo, use o [roteiro de 40 minutos](WORKSHOP.md).
 
 ## CLI e demonstração visual / CLI and visual demonstration
+
+**New on GitHub in 0.4.0:** [persistent SQLite execution and crash recovery](DURABILITY.md),
+with process-interruption and concurrency tests. Requires Node.js 22.13+.
+**Novo:** registro persistente, recuperação por recibos e bloqueio de resultados
+incertos. Use os comandos do guia no checkout; a publicação npm é independente.
+The npm quick start below remains pinned to the verified 0.3.0 release.
 
 **New in 0.3.0:** [offline ASFF review](ASFF.md) with a synthetic S3.8 finding,
 four explicit S3 flags and negative-input tests.
@@ -154,7 +160,7 @@ Perguntas para discutir:
 
 ### Limitações
 
-O ledger e o estado vivem no mesmo processo e desaparecem ao terminar.
+No exercício original `lab.mjs`, o ledger e o estado vivem no mesmo processo e desaparecem ao terminar.
 Não há concorrência distribuída, persistência, autorização IAM, aprovação
 assinada, TTL ou coleta ASFF na AWS. O adaptador offline é um exercício separado.
 O teste de campo extra não comprova resistência
@@ -162,9 +168,10 @@ geral a prompt injection. A representação booleana não cobre os quatro campos
 reais de S3 Block Public Access. O custo de AWS é zero nesta versão porque não
 há chamadas de rede; isso não estima o custo de uma implementação real.
 
-Próxima fase: coleta somente leitura, aprovação
-autenticada, ledger durável com conditional writes, recuperação após falha,
-medição de custo e limpeza verificável, em ambiente isolado.
+A extensão [DURABILITY.md](DURABILITY.md) já demonstra persistência SQLite e
+recuperação local. Próxima fase cloud: coleta somente leitura, aprovação
+autenticada, armazenamento e recuperação apropriados ao serviço remoto,
+medição de custo e limpeza verificável em ambiente isolado.
 
 ### Compartilhe o resultado
 
@@ -174,8 +181,10 @@ travou, tempo aproximado e uma melhoria sugerida. Não envie credenciais,
 IDs de conta, findings reais ou dados de clientes. Nome/citação só serão
 publicados com autorização separada. Executar o lab não envia telemetria.
 
-Limpeza: o exercício não grava arquivos e não cria recursos. Exclua somente
+Limpeza: o exercício original não grava arquivos e não cria recursos. Exclua somente
 os arquivos que você baixou ou os relatórios que você mesmo salvou.
+Os comandos `durable` criam banco e arquivos auxiliares locais; siga a limpeza
+específica em DURABILITY.md.
 
 ## English
 
@@ -203,7 +212,7 @@ drift, unsupported fields/resource scope, reviewed rollback and conflicting
 replays. Read `selfTest()` and explain why each failure must stop the workflow.
 
 This is not a Security Hub integration or production authorization system.
-The ledger is process-local and ephemeral. There is no distributed atomicity,
+The original `lab.mjs` ledger is process-local and ephemeral. There is no distributed atomicity,
 IAM authorization, signed approval, expiry, live ASFF collection or crash recovery.
 The offline ASFF adapter is a separate teaching exercise.
 The boolean is not a complete S3 Block Public Access configuration. The
@@ -217,7 +226,9 @@ Feedback: Node version, OS, passing/failing tests, blocking step, approximate
 time and one suggestion, through https://fernando.moretes.com. Do not share
 credentials, customer data or real findings. Attribution requires separate
 consent. No telemetry is sent. Cleanup only involves files you downloaded or
-reports you explicitly saved; the lab itself writes no files.
+reports you explicitly saved; the original in-memory lab writes no files.
+The opt-in `durable` extension writes SQLite files; see DURABILITY.md for recovery
+semantics and cleanup.
 
 ## Sources / Fontes
 
