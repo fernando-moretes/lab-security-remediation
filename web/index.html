@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security remediation review lab</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body><main>
+<header><p class="eyebrow">FERNANDO AZEVEDO · OPEN SOURCE LAB</p>
+<div class="heading"><h1>Do finding à decisão revisada</h1><label>Idioma / Language <select id="language"><option value="pt">Português</option><option value="en">English</option></select></label></div>
+<p id="intro">Explore os caminhos de sucesso e falha. Simulação local, sem recursos AWS, credenciais ou telemetria.</p></header>
+<section aria-labelledby="choose"><h2 id="choose">Escolha um cenário</h2><div id="scenarios" class="choices"></div></section>
+<section class="panel" aria-labelledby="scenario-title">
+<h2 id="scenario-title">Carregando…</h2><p id="lesson"></p>
+<div class="controls"><button id="next" disabled>Próximo passo</button><button id="reset" disabled>Reiniciar</button><span id="progress" role="status" aria-live="polite"></span></div>
+<ol id="steps"></ol>
+<div id="result" aria-live="polite"></div>
+<details><summary id="json-label">Inspecionar evidência JSON</summary><pre id="json"></pre></details>
+</section>
+<aside><h2 id="limits-title">Limites importantes</h2><p id="limits">A aprovação é simulada, o ledger existe apenas em memória e o booleano não representa toda a configuração S3. Não há identidade autenticada, persistência, expiração, concorrência distribuída ou integração AWS.</p></aside>
+<footer><a href="https://github.com/fernando-moretes/lab-security-remediation">GitHub · MIT · Issues &amp; PRs</a><p id="hint">Os passos exibem resultados calculados pelo código do lab. Avançar a apresentação não modifica infraestrutura.</p></footer>
+</main></body></html>

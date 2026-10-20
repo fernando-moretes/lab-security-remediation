@@ -1,4 +1,4 @@
-# Security remediation review lab — v0.1.0
+# Security remediation review lab — v0.2.0
 
 Fernando Azevedo · 20 October 2026 · MIT
 
@@ -10,6 +10,78 @@ Fernando Azevedo · 20 October 2026 · MIT
 
 Running a group session? Use the [40-minute facilitator guide](WORKSHOP.md).
 Para uma sessão em grupo, use o [roteiro de 40 minutos](WORKSHOP.md).
+
+## CLI e demonstração visual / CLI and visual demonstration
+
+Use the npm quick start below, or clone the repository to inspect and modify
+the source before running it.
+
+Use o início rápido via npm abaixo ou faça um clone para inspecionar e modificar
+o código antes de executá-lo.
+
+![Local demonstration in Portuguese](https://raw.githubusercontent.com/fernando-moretes/lab-security-remediation/main/docs/demo-preview.png)
+
+```sh
+# From a repository clone / A partir do clone
+node bin/cli.mjs --help
+node bin/cli.mjs test
+node bin/cli.mjs scenarios all --lang pt
+node bin/cli.mjs scenarios drift --lang en --json
+node bin/cli.mjs web
+```
+
+`web` prints a local URL at `127.0.0.1` with an automatically chosen port.
+Open it in your browser. Switch PT/EN, choose a scenario and reveal each step.
+The presentation shows actual results from the simulation code. It does not
+modify infrastructure. Ctrl+C stops the server; no files or telemetry are saved.
+
+`web` mostra um endereço local em `127.0.0.1` com porta escolhida automaticamente.
+Abra no navegador, alterne PT/EN, escolha um cenário e avance pelos passos.
+Os resultados vêm do código da simulação. Ctrl+C encerra o servidor.
+O servidor aceita apenas leitura dos arquivos fixos da demonstração.
+
+Via npm:
+
+```sh
+npx security-remediation-review-lab@0.2.0 test
+npx security-remediation-review-lab@0.2.0 scenarios all --lang pt
+npx security-remediation-review-lab@0.2.0 web
+```
+
+The npm client may use the network to download the package. Once installed,
+CLI scenarios work offline; the visual demonstration uses only a loopback HTTP
+server. No runtime dependencies, AWS calls or model calls.
+
+O npm pode usar rede para baixar o pacote. Depois da instalação, os cenários
+funcionam offline; a interface usa apenas um servidor HTTP local.
+
+### Scenario map / Mapa de cenários
+
+| Command | Outcome | Lesson |
+| --- | --- | --- |
+| `scenarios approved` | simulated-change | Review binds to a bounded proposal |
+| `scenarios unapproved` | rejected | A proposal is not authorization |
+| `scenarios tampering` | rejected | Earlier approval cannot cover modified content |
+| `scenarios drift` | rejected | Changed resource state requires fresh review |
+| `scenarios duplicate` | duplicate | Same process-local ledger prevents repeat application |
+| `scenarios rollback` | reviewed-rollback | Unsafe restoration needs explicit review too |
+| `scenarios conflict` | rejected | Same finding cannot authorize a different operation |
+
+### JavaScript API
+
+After installation, import the deterministic core or scenario runner:
+
+```js
+import { initialState, finding, propose } from "security-remediation-review-lab";
+import { runScenario } from "security-remediation-review-lab/scenarios";
+
+console.log(propose(finding, initialState())); // proposal only
+console.log(runScenario("drift")); // synthetic state, expected rejection and steps
+```
+
+See [API.md](API.md) for contracts and limitations,
+[CHANGELOG.md](CHANGELOG.md) for version history and [RELEASING.md](RELEASING.md)
+for the maintainer's publication checklist.
 
 ```sh
 git clone https://github.com/fernando-moretes/lab-security-remediation.git

@@ -5,6 +5,7 @@ Status: 20 October 2026. Items below are proposals, not delivery promises.
 | Stage | Deliverable | Acceptance evidence | Status |
 | --- | --- | --- | --- |
 | 0.1 | Offline proposal, review, drift, replay and rollback exercise | Seven self-tests; runnable without credentials | Available |
+| 0.2 | Installable CLI, narrated scenarios and local PT/EN visual demo | Packed installation smoke test, CLI and HTTP boundary tests | Implemented; release checks required |
 | Community review | PT/EN clarity and reproducibility | Voluntary participant reports with version/OS and concrete feedback | Open |
 | Read-only adapter | Sanitized ASFF fixture and explicit field validation | Synthetic fixtures; unsupported resources rejected; no write calls | Planned |
 | Durable execution | Conditional ledger and interrupted-operation recovery | Duplicate, concurrent delivery and crash-window tests | Planned |

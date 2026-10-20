@@ -9,6 +9,10 @@ No AWS account, payment method, CLI configuration or package installation.
 - Confirm Node.js 22+ with `node --version`.
 - Clone this repository or download the release assets.
 - Run `node lab.mjs --self-test`: expect seven passing tests.
+- For the visual session in v0.2.0, run `node bin/cli.mjs web` and open the
+  printed loopback URL. Choose PT/EN and reveal each scenario one step at a time.
+- For a terminal session, run `node bin/cli.mjs scenarios all --lang en`
+  (or `--lang pt`). Use `--json` to inspect machine-readable evidence.
 - Keep an unchanged copy of `lab.mjs` for comparison and recovery.
 - Explain that `--approve` simulates review; it is not identity authentication.
 - Do not ask participants to share their screen with credentials or customer data.
