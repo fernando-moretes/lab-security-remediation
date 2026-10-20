@@ -1,14 +1,25 @@
 {
   "name": "security-remediation-review-lab",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",
   "type": "module",
   "description": "A bilingual, dependency-free lab for reviewing security remediation proposals.",
   "license": "MIT",
+  "author": "Fernando Azevedo <fernando@moretes.com>",
+  "repository": { "type": "git", "url": "git+https://github.com/fernando-moretes/lab-security-remediation.git" },
+  "homepage": "https://github.com/fernando-moretes/lab-security-remediation#readme",
+  "bugs": "https://github.com/fernando-moretes/lab-security-remediation/issues",
+  "keywords": ["aws", "security", "education", "remediation", "simulation", "workshop"],
+  "bin": { "security-remediation-lab": "./bin/cli.mjs" },
+  "exports": { ".": "./lab.mjs", "./scenarios": "./scenarios.mjs" },
+  "files": ["bin/", "web/", "lab.mjs", "scenarios.mjs", "server.mjs", "*.md", "LICENSE.txt"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
   "engines": { "node": ">=22" },
   "scripts": {
-    "test": "node lab.mjs --self-test",
+    "test": "node --test test/lab.test.mjs",
     "start": "node lab.mjs",
-    "demo": "node lab.mjs --approve"
+    "demo": "node bin/cli.mjs scenarios all",
+    "web": "node bin/cli.mjs web",
+    "prepublishOnly": "npm test",
+    "test:package": "node scripts/test-package.mjs"
   }
 }
