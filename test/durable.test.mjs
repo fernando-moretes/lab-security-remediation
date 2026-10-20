@@ -137,14 +137,17 @@ test("rejected approval or tampered digest leaves no intent or side effect", (t)
   });
 });
 test("six simultaneous processes applying the same event produce one receipt and effect", async (t) => {
-  const path = setup(t), r = request();
-  const results = await concurrent(path, Array.from({ length: 6 }, () => r));
-  for (const result of results) assert.equal(result.code, 0, result.stderr);
-  withLab(path, (lab) => {
-    assert.equal(lab.inspect().state.version, 2);
-    assert.equal(lab.inspect().receipts.length, 1);
-    assert.equal(lab.inspect().operations.length, 1);
-  });
+  // Fresh WAL sidecars each round exercise concurrent connection initialization too.
+  for (let round = 0; round < 3; round++) {
+    const path = setup(t), r = request();
+    const results = await concurrent(path, Array.from({ length: 6 }, () => r));
+    for (const result of results) assert.equal(result.code, 0, result.stderr);
+    withLab(path, (lab) => {
+      assert.equal(lab.inspect().state.version, 2);
+      assert.equal(lab.inspect().receipts.length, 1);
+      assert.equal(lab.inspect().operations.length, 1);
+    });
+  }
 });
 test("concurrent conflicting payloads cannot reuse an operation id", async (t) => {
   const path = setup(t);
