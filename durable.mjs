@@ -73,6 +73,9 @@ export class DurableLab {
     if (!statSync(path).isFile()) throw new Error("Expected an initialized regular database file");
     const db = new DatabaseSync(path);
     try {
+      // Opening WAL sidecars can contend too, before the first application write.
+      // Install the connection-local busy handler before ANY schema read.
+      db.exec("PRAGMA busy_timeout=5000;");
       // Verify ownership markers before enabling WAL or changing any schema.
       if (db.prepare("PRAGMA application_id").get().application_id !== APPLICATION_ID ||
           db.prepare("PRAGMA user_version").get().user_version !== 1) {

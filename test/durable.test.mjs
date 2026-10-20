@@ -30,10 +30,11 @@ function child(path, req, crash = "") {
 }
 async function concurrent(path, requests) {
   const children = requests.map((r) => fork(worker, [path, JSON.stringify(r)], { silent: true }));
+  const diagnostics = new Map();
   const results = children.map((p) => new Promise((resolve, reject) => {
     let stdout = "", stderr = "";
     p.stdout.on("data", (s) => stdout += s);
-    p.stderr.on("data", (s) => stderr += s);
+    p.stderr.on("data", (s) => { stderr += s; diagnostics.set(p, stderr); });
     p.on("error", reject);
     p.on("exit", (code) => resolve({ code, stdout, stderr }));
   }));
@@ -41,11 +42,15 @@ async function concurrent(path, requests) {
   try {
     await Promise.all(children.map((p) => new Promise((resolve, reject) => {
       p.once("message", resolve); p.once("error", reject);
-      p.once("exit", () => reject(new Error("Worker exited before ready")));
+      p.once("exit", () => reject(new Error(`Worker exited before ready: ${diagnostics.get(p) ?? "no stderr"}`)));
     })));
     children.forEach((p) => p.send("start"));
     return await Promise.all(results);
-  } finally { clearTimeout(timer); children.forEach((p) => { if (p.exitCode === null) p.kill(); }); }
+  } finally {
+    clearTimeout(timer);
+    children.forEach((p) => { if (p.exitCode === null) p.kill(); });
+    await Promise.allSettled(results);
+  }
 }
 
 test("explicit initialization refuses existing files; corrupt/foreign DBs are never reset", (t) => {
