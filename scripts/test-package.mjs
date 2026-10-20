@@ -1,4 +1,4 @@
-import { mkdtempSync, rmSync, readFileSync } from "node:fs";
+import { mkdtempSync, rmSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -32,6 +32,12 @@ try {
   const asff = JSON.parse(npm(["exec", "--offline", "--", "security-remediation-lab", "asff"], temp));
   assert.equal(asff.executable, false);
   assert.equal(Object.keys(asff.candidate.before).length, 4);
+  const db = join(temp, "durable.sqlite"), proposalPath = join(temp, "proposal.json");
+  const durable = (...args) => JSON.parse(npm(["exec", "--offline", "--", "security-remediation-lab", "durable", ...args], temp));
+  durable("init", db);
+  writeFileSync(proposalPath, JSON.stringify(durable("plan", db)));
+  assert.equal(durable("run", db, proposalPath, "--approve").status, "applied");
+  assert.equal(durable("recover", db, "synthetic-finding-001").state.version, 2);
   const { startServer } = await import(pathToFileURL(join(installed, "server.mjs")));
   const server = await startServer();
   try {

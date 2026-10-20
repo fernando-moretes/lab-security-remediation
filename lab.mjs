@@ -1,5 +1,5 @@
 /**
- * Security remediation review lab v0.3.0
+ * Security remediation review lab v0.4.0
  * Copyright (c) 2026 Fernando Azevedo. MIT; see LICENSE.txt.
  * LOCAL SIMULATION ONLY. No network, AWS SDK, credentials or cloud mutations.
  * Requires Node.js >= 22. Run: node lab.mjs --self-test
@@ -139,7 +139,7 @@ export function selfTest() {
     const changed = propose(finding, next);
     assert.throws(() => apply(changed, approve(changed, next, "reviewer"), next, ledger), /Conflicting/);
   });
-  return { labVersion: "0.3.0", mode: "local-simulation", tests: results, passed: results.length };
+  return { labVersion: "0.4.0", mode: "local-simulation", tests: results, passed: results.length };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
@@ -148,7 +148,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.ar
     console.log(JSON.stringify(selfTest(), null, 2));
   } else if (args.length === 0 || (args.length === 1 && args[0] === "--approve")) {
     const state = initialState(), proposal = propose(finding, state);
-    const report = { labVersion: "0.3.0", mode: "local-simulation", proposal,
+    const report = { labVersion: "0.4.0", mode: "local-simulation", proposal,
       cloudCalls: 0, cloudResourcesCreated: 0 };
     if (args[0] === "--approve") {
       report.result = apply(proposal, approve(proposal, state, "explicit-cli-review"), state, new Map());

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.0 — 2026-10-20 (GitHub release)
+
+- Opt-in persistent SQLite ledger and synthetic target adapter.
+- Separate intent, target+receipt and ledger-confirmation transactions.
+- Explicit recovery with `pending`, `applied`, `reconciled` and `uncertain` states.
+- CLI initialization, planning, reviewed execution, inspection, recovery and drift.
+- Five real subprocess crash points and cross-process concurrency tests.
+- Fourteen durability tests; 22 test groups total, plus packed-install smoke tests.
+- Dedicated PT/EN runbook, state diagram, fault matrix, retention and cleanup rules.
+- Minimum Node.js 22.13; built-in SQLite may emit an experimental warning on Node 22.
+- No cloud deployment, authenticated approval, durable rollback or npm publication
+  implied by this GitHub release.
+
 ## 0.3.0 — 2026-10-20
 
 - Offline synthetic ASFF S3.8 review through CLI and JavaScript API.

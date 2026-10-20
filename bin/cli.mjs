@@ -27,6 +27,10 @@ security-remediation-lab demo
 security-remediation-lab scenarios [all|${scenarios.map((s) => s.id).join("|")}]
 security-remediation-lab web
 security-remediation-lab asff [synthetic-fixture.json]
+security-remediation-lab durable init|plan|inspect <database>
+security-remediation-lab durable run <database> <proposal.json> --approve [--crash <point>]
+security-remediation-lab durable recover <database> <operation-id>
+security-remediation-lab durable drift <database> true|false
 
 Options: --lang pt|en, --json, --version, --help
 web: local interactive demonstration at 127.0.0.1, random port; Ctrl+C to stop.
@@ -45,6 +49,11 @@ Docs: https://github.com/fernando-moretes/lab-security-remediation`);
       for (const step of r.steps) console.log(`  ${step.action}: ${JSON.stringify(step.value)}`);
       console.log(`\n${r.outcome} | version ${r.before.version} → ${r.after.version} | cloud calls: 0`);
     }
+  } else if (command === "durable") {
+    const { durableCommand } = await import("./durable-cli.mjs");
+    const result = durableCommand(args);
+    output(result);
+    if (result.status === "uncertain") process.exitCode = 2;
   } else if (command === "asff" && args.length <= 1) {
     const raw = readFileSync(args[0] ?? new URL("../fixtures/asff-s3-8.json", import.meta.url));
     if (raw.length > 65536) throw new Error("Fixture exceeds 64 KiB");
